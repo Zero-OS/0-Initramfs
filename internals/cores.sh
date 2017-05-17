@@ -47,10 +47,7 @@ compile_cores() {
 install_cores() {
     echo "[+] copying binaries"
     cp -a bin/* "${ROOTDIR}/sbin/"
-    for file in `ls tools/*`; do
-        cp -a "tools/${file}" "${ROOTDIR}/bin/"
-        ln -rs "../../bin/{$file}" "{$ROOTDIR}/usr/bin/${file}" 
-    done
+    cp -a tools/* "${ROOTDIR}/usr/bin/"
     cp -a ../g8ufs/g8ufs "${ROOTDIR}/sbin/"
     pushd "${ROOTDIR}/sbin"
     ln -sf corectl reboot
