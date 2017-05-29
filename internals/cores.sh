@@ -38,8 +38,8 @@ compile_cores() {
     echo "[+] compiling coreX and core0"
     make
 
-    echo "[+] compiling 0-FS"
-    pushd ../0-FS
+    echo "[+] compiling 0-fs"
+    pushd ../0-fs
     make
     popd
 }
