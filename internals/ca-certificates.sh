@@ -23,14 +23,14 @@ extract_certs() {
 prepare_certs() {
     echo "[+] preparing ca-certificates"
 
-    cd usr/share/ca-certificates/
+    pushd usr/share/ca-certificates/
     find * -name '*.crt' | LC_ALL=C sort > ../../../etc/ca-certificates.conf
-    cd ../../../
+    popd
 
-    if [ ! -f ca-certificates-20150426-root.patch ]; then
-        echo "[+] downloading patch"
-        curl -s https://gist.githubusercontent.com/maxux/a5472530dd88b3480d745388d81e4c7f/raw/373d3b04fb36a28fdf99c6748646335e10317242/ca-certificates-20150426-root.patch > ca-certificates-20150426-root.patch
-        patch -p1 < ca-certificates-20150426-root.patch
+    if [ ! -f .patched_ca-certificates-20150426-root.patch ]; then
+        echo "[+] applying patch"
+        patch -p1 < ${PATCHESDIR}/ca-certificates-20150426-root.patch
+        touch .patched_ca-certificates-20150426-root.patch
     fi
 }
 
