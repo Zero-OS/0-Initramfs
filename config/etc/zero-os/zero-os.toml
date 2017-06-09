@@ -2,9 +2,9 @@
 
 [main]
 max_jobs = 524288
-include = ["/etc/g8os/conf"]
+include = ["/etc/zero-os/conf"]
 log_level = "info"
-network = "/etc/g8os/network.toml"
+network = "/etc/zero-os/network.toml"
 
 [containers]
 max_count = 1000
