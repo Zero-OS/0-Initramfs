@@ -100,7 +100,7 @@ export GOPATH=/gopath
 git clone https://github.com/Zero-OS/initramfs.git
 
 # start the build
-cd /initramfs
+cd /initramfs/0-initramfs
 bash initramfs.sh
 ```
 The result of the build will be located in `staging/vmlinuz.efi` so copy it out of the docker by executing `docker cp zero-os-builder:/initramfs/staging/vmlinuz.efi .`
