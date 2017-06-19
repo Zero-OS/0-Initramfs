@@ -103,7 +103,7 @@ git clone https://github.com/zero-os/0-initramfs
 cd /0-initramfs
 bash initramfs.sh
 ```
-The result of the build will be located in `staging/vmlinuz.efi` so copy it out of the docker by executing `docker cp zero-os-builder:/initramfs/staging/vmlinuz.efi .`
+The result of the build will be located in `staging/vmlinuz.efi` so copy it out of the docker by executing `docker cp zero-os-builder:/0-initramfs/staging/vmlinuz.efi .`
 
 # I have the kernel, what can I do with it ?
 Just boot it. The kernel image is EFI bootable.
