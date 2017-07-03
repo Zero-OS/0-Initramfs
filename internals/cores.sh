@@ -11,8 +11,8 @@ prepare_cores() {
     echo "[+] loading source code: g8ufs"
     go get -d -v github.com/zero-os/0-fs
 
-	echo "[+] loading soruce code: ztid"
-	go get -d -v github.com/zero-os/ztid
+    echo "[+] loading soruce code: ztid"
+    go get -d -v github.com/zero-os/ztid
 
     echo "[+] ensure core0 to branch: ${CORES_VERSION}"
     pushd $GOPATH/src/github.com/zero-os/0-core
