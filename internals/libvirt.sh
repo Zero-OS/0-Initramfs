@@ -69,12 +69,20 @@ install_libvirt() {
     make DESTDIR="${ROOTDIR}" install
 }
 
+configure_libvirt(){
+    echo "[+] configuring libvirt"
+    sed -i -e 's/#listen_tcp/listen_tcp/g' ${ROOTDIR}/etc/libvirt/libvirtd.conf
+    sed -i -e 's/#listen_tls/listen_tls/g' ${ROOTDIR}/etc/libvirt/libvirtd.conf
+    sed -i -e 's/#tcp_port/tcp_port/g' ${ROOTDIR}/etc/libvirt/libvirtd.conf
+}
+
 build_libvirt() {
     pushd "${WORKDIR}/libvirt-${LIBVIRT_VERSION}"
 
     prepare_libvirt
     compile_libvirt
     install_libvirt
+    configure_libvirt
 
     popd
 }
