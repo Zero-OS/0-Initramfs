@@ -15,22 +15,20 @@ extract_openssh() {
 
 prepare_openssh() {
     echo "[+] preparing openssh"
-    ./configure --prefix=/ \
-        --without-kerberos \
+    ./configure --prefix=/usr \
+        --sysconfdir=/etc/ssh \
         --without-kerberos5 \
         --without-ldns \
         --with-pie \
-		--without-libedit \
-		--without-pam \
-		--without-sctp \
-		--without-selinux \
-		--without-skey \
-		--without-ssh1 \
+        --without-libedit \
+        --without-pam \
+        --without-selinux \
+        --without-skey \
+        --without-ssh1 \
         --without-shadow \
-		--disable-strip
-
-        # --with-ssl-dir=PATH
-
+        --disable-strip \
+        --with-privsep-user=root \
+        --with-ssl-dir="${ROOTDIR}"
 }
 
 compile_openssh() {
@@ -43,6 +41,9 @@ install_openssh() {
     make DESTDIR="${ROOTDIR}" install
 
     mkdir -p -m 700 "${ROOTDIR}"/root/.ssh
+
+    # configuring openssh
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' "${ROOTDIR}"/etc/ssh/sshd_config
 }
 
 build_openssh() {
