@@ -1,6 +1,7 @@
 [startup.sshdkeys]
 name = "bash"
 after = ["init"]
+running_delay = -1
 
 [startup.sshdkeys.args]
 script = """
