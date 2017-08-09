@@ -445,6 +445,9 @@ g8os_root() {
 
     # System scripts
     cp -a "${CONFDIR}"/usr/udhcp "${ROOTDIR}"/usr/share/
+
+    # Debugfs tool
+    cp -a "${CONFDIR}"/debugfs/debugfs "${ROOTDIR}"/usr/sbin/
 }
 
 #
