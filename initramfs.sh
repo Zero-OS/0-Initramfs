@@ -448,6 +448,7 @@ g8os_root() {
 
     # Debugfs tool
     cp -a "${CONFDIR}"/debugfs/debugfs "${ROOTDIR}"/usr/sbin/
+    cp -a "${CONFDIR}"/debugfs/ssh-add-github-key "${ROOTDIR}"/usr/sbin/
 }
 
 #
