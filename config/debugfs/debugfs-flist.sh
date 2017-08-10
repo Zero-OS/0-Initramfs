@@ -8,6 +8,11 @@ mkdir -p ${ROOTBUNTU}
 rm -rf ${ROOTBUNTU}/*
 rm -rf ${TARGET}
 
+echo "Installing image into: ${ROOTBUNTU}"
+echo "Exporting flist to: ${TARGET}"
+echo ""
+echo "Bootstrapping the base image..."
+
 # installing system
 debootstrap \
   --arch=amd64 \
@@ -21,6 +26,16 @@ echo "Debugfs base system installed"
 files=$(find ${ROOTBUNTU} | wc -l)
 rootsize=$(du -sh ${ROOTBUNTU})
 echo "${rootsize}, ${files} files installed"
+
+echo "Customizing settings..."
+
+touch ${ROOTBUNTU}/root/.sudo_as_admin_successful
+echo 'export PS1="(debugfs) $PS1"' >> ${ROOTBUNTU}/root/.bashrc
+echo 'cat /root/.debugfs' >> ${ROOTBUNTU}/root/.bashrc
+
+echo "You are now on debugfs environment" > ${ROOTBUNTU}/root/.debugfs
+echo "Don't forget to 'apt-get update' before installing new packages" >> ${ROOTBUNTU}/root/.debugfs
+echo "" >> ${ROOTBUNTU}/root/.debugfs
 
 echo "Cleaning installation..."
 

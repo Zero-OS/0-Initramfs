@@ -4,8 +4,8 @@ debugroot="/mnt/debugfs"
 
 echo "[+] preparing debug environment"
 
-if [ ! -e /tmp/ubuntu1604.flist ]; then
-    wget https://hub.gig.tech/maxux/ubuntu-debugfs.flist -O /tmp/ubuntu1604.flist
+if [ ! -e /tmp/ubuntu-debugfs.flist ]; then
+    wget https://hub.gig.tech/maxux/ubuntu-debugfs.flist -O /tmp/ubuntu-debugfs.flist
 fi
 
 mkdir -p ${debugroot}/backend
@@ -21,7 +21,7 @@ if ps aux | grep g8ufs | grep -q debugfs; then
 fi
 
 echo "[+] starting the fuse filesystem"
-g8ufs -backend ${debugroot}/backend -meta /tmp/ubuntu1604.flist ${debugroot}/image/ &
+g8ufs -backend ${debugroot}/backend -meta /tmp/ubuntu-debugfs.flist ${debugroot}/image/ &
 
 echo "[+] waiting for the filesystem"
 while [ ! -f ${debugroot}/image/bin/bash ]; do
@@ -36,13 +36,6 @@ mount -o bind /sys ${debugroot}/image/sys
 
 mount -o bind /dev ${debugroot}/image/dev
 mount -o bind /dev/pts ${debugroot}/image/dev/pts
-
-if ! grep -q debugfs ${debugroot}/image/root/.bashrc; then
-    echo 'export PS1="(debugfs) $PS1"' >> ${debugroot}/image/root/.bashrc
-fi
-
-echo "[+] updating environment"
-chroot ${debugroot}/image apt-get update
 
 echo "[+] entering debug environment"
 chroot ${debugroot}/image /bin/bash
