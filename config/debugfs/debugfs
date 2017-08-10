@@ -15,13 +15,15 @@ echo "[+] ensure debug environment sanity"
 umount -r ${debugroot}/image 2> /dev/null
 umount -r ${debugroot}/backend/ro 2> /dev/null
 
+backendaddr=$(grep 'storage = ' /etc/zero-os/zero-os.toml | cut -d'"' -f2)
+
 # killing previous debugfs instance
 if ps aux | grep g8ufs | grep -q debugfs; then
     kill -9 $(ps aux | grep g8ufs | grep debugfs | awk '{ print $1 }' | xargs)
 fi
 
 echo "[+] starting the fuse filesystem"
-g8ufs -backend ${debugroot}/backend -meta /tmp/ubuntu-debugfs.flist ${debugroot}/image/ &
+g8ufs -backend ${debugroot}/backend -storage-url "${backendaddr}" -meta /tmp/ubuntu-debugfs.flist ${debugroot}/image/ &
 
 echo "[+] waiting for the filesystem"
 while [ ! -f ${debugroot}/image/bin/bash ]; do
