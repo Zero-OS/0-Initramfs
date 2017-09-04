@@ -29,7 +29,7 @@ fi
 
 DO_ALL=1
 
-if [ "$OPTS" != " --" ]; then
+if [ "$OPTS" != " --" ] && [ "$OPTS" != " --release --" ]; then
     DO_ALL=0
 
     DO_DOWNLOAD=0
@@ -109,6 +109,7 @@ done
 . "${INTERNAL}"/smartmontools.sh
 . "${INTERNAL}"/netcat.sh
 . "${INTERNAL}"/ork.sh
+. "${INTERNAL}"/restic.sh
 
 #
 # Utilities
@@ -236,6 +237,7 @@ download_all() {
     download_openssh
     download_smartmon
     download_netcat
+    download_restic
 
     popd
 }
@@ -269,6 +271,7 @@ extract_all() {
     extract_openssh
     extract_smartmon
     extract_netcat
+    extract_restic
 
     popd
 }
@@ -445,6 +448,10 @@ g8os_root() {
 
     # System scripts
     cp -a "${CONFDIR}"/usr/udhcp "${ROOTDIR}"/usr/share/
+
+    # Debugfs tool
+    cp -a "${CONFDIR}"/debugfs/debugfs "${ROOTDIR}"/usr/sbin/
+    cp -a "${CONFDIR}"/debugfs/ssh-add-github-key "${ROOTDIR}"/usr/sbin/
 }
 
 #
@@ -579,6 +586,7 @@ main() {
 
     if [[ $DO_ALL == 1 ]] || [[ $DO_ORK == 1 ]]; then
         build_ork
+        build_restic
     fi
 
     if [[ $DO_ALL == 1 ]] || [[ $DO_CORES == 1 ]]; then
