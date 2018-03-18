@@ -384,6 +384,7 @@ clean_staging() {
 
     rm -rf "${DISTFILES}"/*
     mv -f "${WORKDIR}"/linux-* "${TMPDIR}"/
+    mv -f "${WORKDIR}"/vmlinuz* "${TMPDIR}"/
     rm -rf "${WORKDIR}"/*
 }
 
